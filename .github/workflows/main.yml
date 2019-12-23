@@ -51,11 +51,6 @@ jobs:
             -b ${GIT_BRANCH}
         done
 
-        ## DEBUG
-        rm -rf openam
-        git clone https://github.com/ogis-miyamura/openam -b ${GIT_BRANCH}
-        ## DEBUG
-    
     - name: Build in order
       run: |
     
@@ -88,16 +83,16 @@ jobs:
         find ./openam/openam-server -name *.war \
           | xargs -I% mv % ${ARTIFACT_DIR}/openam-${{ steps.extract_version.outputs.VERSION }}.war
 
+        ## ssoadmintools-<version>.zip
+        find ./openam/openam-distribution -name SSOAdminTools-*.zip \
+          | xargs -I% mv % ${ARTIFACT_DIR}/ssoadmintools-${{ steps.extract_version.outputs.VERSION }}.zip
+
         ## openam-configurator-tool-<version>.zip
         mkdir -p ${OPENAM_CONFIGURATOR_TOOL}
         cp -pr \
           ./openam/openam-tools/openam-configurator-tool/target/* \
           ${OPENAM_CONFIGURATOR_TOOL}/
         zip -r ${ARTIFACT_DIR}/${OPENAM_CONFIGURATOR_TOOL}.zip ${OPENAM_CONFIGURATOR_TOOL}
-
-        ## ssoadmintools-<version>.zip
-        find ./openam/openam-distribution -name SSOAdminTools-*.zip \
-          | xargs -I% mv % ${ARTIFACT_DIR}/ssoadmintools-${{ steps.extract_version.outputs.VERSION }}.zip
 
     - name: Create the Release
       id: create_release
