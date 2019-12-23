@@ -88,7 +88,13 @@ jobs:
 
         ## openam-configurator-tool-<version>.zip
         mkdir -p ${WORK_DIR}
-        cp -r openam/openam-tools/openam-configurator-tool/target/* ${WORK_DIR}/
+
+        ls -al ./openam
+        ls -al ./openam/openam-tools
+        ls -al ./openam/openam-tools/openam-configurator-tool
+        ls -al ./openam/openam-tools/openam-configurator-tool/target
+
+        cp -r ./openam/openam-tools/openam-configurator-tool/target/* ${WORK_DIR}/
         rm -rf ${WORK_DIR}/openam-configurator-tool-*
         zip -r -q ${ARCHIVE_NAME}.zip ${ARCHIVE_NAME}
         rm -rf ${ARCHIVE_NAME}
