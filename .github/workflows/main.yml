@@ -50,6 +50,11 @@ jobs:
             ${GIT_ORIGIN}/${REPO} \
             -b ${GIT_BRANCH}
         done
+
+        ## DEBUG
+        rm -rf openam
+        git clone https://github.com/ogis-miyamura/openam -b ${GIT_BRANCH}
+        ## DEBUG
     
     - name: Build in order
       run: |
@@ -76,28 +81,19 @@ jobs:
     - name: Collect release artifact
       id: collect_artifact
       env:
-        ARCHIVE_NAME: openam-configurator-tool-${{ steps.extract_version.outputs.VERSION }}
-        WORK_DIR: ${ARTIFACT_DIR}/${ARCHIVE_NAME}
+        OPENAM_CONFIGURATOR_TOOL: openam-configurator-tool-${{ steps.extract_version.outputs.VERSION }}
       run: |
-
-        mkdir -p ${ARTIFACT_DIR}
 
         ## openam-<version>war
         find ./openam/openam-server -name *.war \
           | xargs -I% mv % ${ARTIFACT_DIR}/openam-${{ steps.extract_version.outputs.VERSION }}.war
 
         ## openam-configurator-tool-<version>.zip
-        mkdir -p ${WORK_DIR}
-
-        ls -al ./openam
-        ls -al ./openam/openam-tools
-        ls -al ./openam/openam-tools/openam-configurator-tool
-        ls -al ./openam/openam-tools/openam-configurator-tool/target
-
-        cp -r ./openam/openam-tools/openam-configurator-tool/target/* ${WORK_DIR}/
-        rm -rf ${WORK_DIR}/openam-configurator-tool-*
-        zip -r -q ${ARCHIVE_NAME}.zip ${ARCHIVE_NAME}
-        rm -rf ${ARCHIVE_NAME}
+        mkdir -p ${OPENAM_CONFIGURATOR_TOOL}
+        cp -pr \
+          ./openam/openam-tools/openam-configurator-tool/target/* \
+          ${OPENAM_CONFIGURATOR_TOOL}/
+        zip -r ${ARTIFACT_DIR}/${OPENAM_CONFIGURATOR_TOOL}.zip ${OPENAM_CONFIGURATOR_TOOL}
 
         ## ssoadmintools-<version>.zip
         find ./openam/openam-distribution -name SSOAdminTools-*.zip \
