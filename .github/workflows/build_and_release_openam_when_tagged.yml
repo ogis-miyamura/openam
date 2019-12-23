@@ -36,35 +36,35 @@ jobs:
 
     steps:
 
-    #- name: Set up JDK ${{ matrix.java }}
-    #  uses: actions/setup-java@v1
-    #  with:
-    #    java-version: ${{ matrix.java }}
-    #    architecture: x64
-    #
-    #- name: Clone source codes
-    #  run: |
-    #
-    #    for REPO in ${REPO_NAMES}; do
-    #      git clone \
-    #        ${GIT_ORIGIN}/${REPO} \
-    #        -b ${GIT_BRANCH}
-    #    done
-    #
-    #- name: Build in order
-    #  run: |
-    #
-    #    mkdir -p ${ARTIFACT_DIR}
-    #    LOG_FILE=${ARTIFACT_DIR}/.build.log
-    #
-    #    BASE_DIR=$(pwd)
-    #    for REPO in ${REPO_NAMES}; do
-    #      cd ${BASE_DIR}/${REPO}
-    #      mvn clean install \
-    #          -DskipTests=true \
-    #          -Dmaven.test.failure.ignore=true \
-    #        | tee -a ${LOG_FILE}
-    #    done
+    - name: Set up JDK ${{ matrix.java }}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java }}
+        architecture: x64
+    
+    - name: Clone source codes
+      run: |
+    
+        for REPO in ${REPO_NAMES}; do
+          git clone \
+            ${GIT_ORIGIN}/${REPO} \
+            -b ${GIT_BRANCH}
+        done
+    
+    - name: Build in order
+      run: |
+    
+        mkdir -p ${ARTIFACT_DIR}
+        LOG_FILE=${ARTIFACT_DIR}/.build.log
+    
+        BASE_DIR=$(pwd)
+        for REPO in ${REPO_NAMES}; do
+          cd ${BASE_DIR}/${REPO}
+          mvn clean install \
+              -DskipTests=true \
+              -Dmaven.test.failure.ignore=true \
+            | tee -a ${LOG_FILE}
+        done
 
     - name: Get the version
       id: extract_version
