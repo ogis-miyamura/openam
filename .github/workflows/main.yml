@@ -83,26 +83,6 @@ jobs:
         find ./openam/openam-server -name *.war \
           | xargs -I% mv % ${ARTIFACT_DIR}/openam-${{ steps.extract_version.outputs.VERSION }}.war
 
-
-        ##DEBUG
-        ls -al ./openam
-        ls -al ./openam/openam-distribution
-        ls -al ./openam/openam-distribution/openam-distribution-ssoadmintools
-        ls -al ./openam/openam-distribution/openam-distribution-ssoadmintools/target
-        ##DEBUG
-
-
-        ## ssoadmintools-<version>.zip
-        find ./openam/openam-distribution -name SSOAdminTools-*.zip \
-          | xargs -I% mv % ${ARTIFACT_DIR}/ssoadmintools-${{ steps.extract_version.outputs.VERSION }}.zip
-
-        ## openam-configurator-tool-<version>.zip
-        mkdir -p ${OPENAM_CONFIGURATOR_TOOL}
-        cp -pr \
-          ./openam/openam-tools/openam-configurator-tool/target/* \
-          ${OPENAM_CONFIGURATOR_TOOL}/
-        zip -r ${ARTIFACT_DIR}/${OPENAM_CONFIGURATOR_TOOL}.zip ${OPENAM_CONFIGURATOR_TOOL}
-
     - name: Create the Release
       id: create_release
       uses: actions/create-release@v1.0.0
