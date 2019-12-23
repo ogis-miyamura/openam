@@ -83,6 +83,15 @@ jobs:
         find ./openam/openam-server -name *.war \
           | xargs -I% mv % ${ARTIFACT_DIR}/openam-${{ steps.extract_version.outputs.VERSION }}.war
 
+
+        ##DEBUG
+        ls -al ./openam
+        ls -al ./openam/openam-distribution
+        ls -al ./openam/openam-distribution/openam-distribution-ssoadmintools
+        ls -al ./openam/openam-distribution/openam-distribution-ssoadmintools/target
+        ##DEBUG
+
+
         ## ssoadmintools-<version>.zip
         find ./openam/openam-distribution -name SSOAdminTools-*.zip \
           | xargs -I% mv % ${ARTIFACT_DIR}/ssoadmintools-${{ steps.extract_version.outputs.VERSION }}.zip
