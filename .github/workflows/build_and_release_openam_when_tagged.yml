@@ -55,7 +55,7 @@ jobs:
       run: |
 
         mkdir -p ${ARTIFACT_DIR}
-        LOG_FILE=${ARTIFACT_DIR}/${RELEASE_NAME}.build.log
+        LOG_FILE=${ARTIFACT_DIR}/.build.log
 
         BASE_DIR=$(pwd)
         for REPO in ${REPO_NAMES}; do
