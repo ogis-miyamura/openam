@@ -54,10 +54,9 @@ jobs:
 
           #----------------------------------------
           # Get the commit hash of the latest tag of all branches, and get the name of the newest tag there, excluding nightly
-          latest_tag=refs/tags/$(git -C ${REPO} describe --tags --exclude nightly `git -C ${REPO} rev-list --tags --max-count=1`)
           #----------------------------------------
-
-          git -C ${REPO} checkout -b ${latest_tag}
+          latest_tag=$(git -C ${REPO} describe --tags --exclude nightly `git -C ${REPO} rev-list --tags --max-count=1`)
+          git -C ${REPO} checkout -b ${latest_tag} refs/tags/${latest_tag}
         done
 
         for REPO in ${REPO_NAMES}; do
