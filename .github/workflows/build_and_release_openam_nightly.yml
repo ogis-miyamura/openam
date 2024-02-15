@@ -57,9 +57,9 @@ jobs:
           #----------------------------------------
           # Ad hoc patch for maven-default-http-blocker
           #----------------------------------------
-          if [ "${REPO}" == 'forgerock-commons' ]; then
-            sed -ie "s|http://archive.apache.org|https://archive.apache.org|g" forgerock-commons/auth-filters/forgerock-authz-filter-parent/authz-framework-functional-tests/pom.xml
-          fi
+          #if [ "${REPO}" == 'forgerock-commons' ]; then
+          #  sed -ie "s|http://archive.apache.org|https://archive.apache.org|g" forgerock-commons/auth-filters/forgerock-authz-filter-parent/authz-framework-functional-tests/pom.xml
+          #fi
           if [ "${REPO}" == 'opendj' ]; then
             sed -ie "s|<url>http://download.oracle.com|<url>https://download.oracle.com|g" opendj/opendj-server-legacy/pom.xml
           fi
