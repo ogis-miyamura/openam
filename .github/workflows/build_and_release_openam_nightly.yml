@@ -47,7 +47,6 @@ jobs:
       with:
         java-version: ${{ matrix.java }}
         distribution: 'temurin'
-        cache: 'maven'
 
     - name: Build in order
       id: build
